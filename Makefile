@@ -1,8 +1,11 @@
+TARGET := AARCH64
+
 CC := gcc
-#TARGET := arm64
-TARGET := x86
-KERNEL := $(shell uname -r)
-KERNELHEADERS := /lib/modules/$(KERNEL)/build/include
-ASMHEADERS := /lib/modules/$(KERNEL)/build/arch/$(TARGET)/include/
+CFLAGS += -Wall -g -DEM_ARCH=EM_$(TARGET)
+CFLAGS += -I./include/
+
 all:
-	$(CC) -Wall -I$(KERNELHEADERS) -I$(ASMHEADERS) core_file_gen.c -o core_file_gen
+	$(CC) $(CFLAGS) core_file_gen.c -o core_file_gen
+	
+clean:
+	rm -f *.o core_file_gen
